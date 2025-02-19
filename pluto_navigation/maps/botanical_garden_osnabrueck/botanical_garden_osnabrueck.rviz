@@ -323,7 +323,6 @@ Visualization Manager:
     - Class: rviz/MoveCamera
     - Class: rviz/Select
     - Class: rviz/FocusCamera
-    - Class: rviz/Measure
     - Class: rviz/SetInitialPose
       Theta std deviation: 0.2617993950843811
       Topic: /initialpose
@@ -331,9 +330,6 @@ Visualization Manager:
       Y std deviation: 0.5
     - Class: rviz/SetGoal
       Topic: /move_base_simple/goal
-    - Class: rviz/PublishPoint
-      Single click: true
-      Topic: /clicked_point
     - Class: rviz_map_plugin/MeshGoal
       Switch Bottom/Top: true
       Topic: goal
@@ -341,7 +337,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 40.561614990234375
+      Distance: 18.836978912353516
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
