@@ -1,0 +1,941 @@
+<sdf version='1.7'>
+  <world name='default'>
+    <model name='botanical_garden'>
+      <pose>0 0 0 0 -0 0</pose>
+      <static>1</static>
+      <link name='body'>
+        <collision name='collision'>
+          <geometry>
+            <mesh>
+              <uri>model://botanical_garden_gazebo.dae</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://botanical_garden_gazebo.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+    </model>
+    <gravity>0 0 -9.8</gravity>
+    <magnetic_field>6e-06 2.3e-05 -4.2e-05</magnetic_field>
+    <atmosphere type='adiabatic'/>
+    <physics type='ode'>
+      <max_step_size>0.001</max_step_size>
+      <real_time_factor>1</real_time_factor>
+      <real_time_update_rate>1000</real_time_update_rate>
+    </physics>
+    <scene>
+      <ambient>0.4 0.4 0.4 1</ambient>
+      <background>0.7 0.7 0.7 1</background>
+      <shadows>1</shadows>
+    </scene>
+    <wind/>
+    <spherical_coordinates>
+      <surface_model>EARTH_WGS84</surface_model>
+      <latitude_deg>0</latitude_deg>
+      <longitude_deg>0</longitude_deg>
+      <elevation>0</elevation>
+      <heading_deg>0</heading_deg>
+    </spherical_coordinates>
+    <model name='pluto'>
+      <link name='base_footprint'>
+        <inertial>
+          <pose>0 0 0.2 0 -0 0</pose>
+          <mass>40</mass>
+          <inertia>
+            <ixx>0.447787</ixx>
+            <ixy>0</ixy>
+            <ixz>-0.143071</ixz>
+            <iyy>1.31521</iyy>
+            <iyz>0</iyz>
+            <izz>1.42809</izz>
+          </inertia>
+        </inertial>
+        <collision name='base_footprint_fixed_joint_lump__base_link_collision'>
+          <pose>0 0 0.2 0 -0.142 0</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/root/catkin_ws/src/pluto_robot/pluto_description/meshes/pluto_base_collision.stl</uri>
+            </mesh>
+          </geometry>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <friction>
+              <ode/>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='base_footprint_fixed_joint_lump__base_link_visual'>
+          <pose>0 0 0.2 0 -0.142 0</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/root/catkin_ws/src/pluto_robot/pluto_description/meshes/pluto_base.stl</uri>
+            </mesh>
+          </geometry>
+          <material>
+            <script>
+              <name>Gazebo/GreyTransparent</name>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+            </script>
+          </material>
+        </visual>
+        <visual name='base_footprint_fixed_joint_lump__imu_center_visual_1'>
+          <pose>0.021504 0 0.127312 2.99959 -0 1.5708</pose>
+          <geometry>
+            <box>
+              <size>0.06 0.06 0.02</size>
+            </box>
+          </geometry>
+        </visual>
+        <visual name='base_footprint_fixed_joint_lump__velodyne_visual_2'>
+          <pose>0.27709 0 0.307396 0 -0.142 0</pose>
+          <geometry>
+            <cylinder>
+              <length>0.1442</length>
+              <radius>0.04265</radius>
+            </cylinder>
+          </geometry>
+        </visual>
+        <sensor name='velodyne' type='ray'>
+          <always_on>1</always_on>
+          <update_rate>5</update_rate>
+          <visualize>0</visualize>
+          <ray>
+            <scan>
+              <horizontal>
+                <samples>360</samples>
+                <resolution>1</resolution>
+                <min_angle>-3.14159</min_angle>
+                <max_angle>3.14159</max_angle>
+              </horizontal>
+              <vertical>
+                <samples>3</samples>
+                <resolution>1</resolution>
+                <min_angle>-0.43284</min_angle>
+                <max_angle>0.0349</max_angle>
+              </vertical>
+            </scan>
+            <range>
+              <min>0.22</min>
+              <max>50</max>
+              <resolution>0.02</resolution>
+            </range>
+          </ray>
+          <plugin name='laser_controller' filename='libgazebo_ros_block_laser.so'>
+            <frameName>velodyne</frameName>
+            <topicName>velodyne</topicName>
+            <gaussianNoise>0.02</gaussianNoise>
+            <updateRate>5</updateRate>
+            <robotNamespace>/</robotNamespace>
+          </plugin>
+          <pose>0.264239 0 0.397287 0 -0.142 0</pose>
+        </sensor>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <joint name='left_rear_wheel' type='revolute'>
+        <pose relative_to='base_footprint'>-0.219194 0.19 0.108054 0 -0.142 0</pose>
+        <parent>base_footprint</parent>
+        <child>left_rear_wheel_link</child>
+        <axis>
+          <xyz>0 1 0</xyz>
+          <limit>
+            <lower>-1e+16</lower>
+            <upper>1e+16</upper>
+          </limit>
+          <dynamics>
+            <spring_reference>0</spring_reference>
+            <spring_stiffness>0</spring_stiffness>
+          </dynamics>
+        </axis>
+      </joint>
+      <link name='left_rear_wheel_link'>
+        <pose relative_to='left_rear_wheel'>0 0 0 0 -0 0</pose>
+        <inertial>
+          <pose>0 0 0 1.5708 -0 0</pose>
+          <mass>3</mass>
+          <inertia>
+            <ixx>0.009013</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.009013</iyy>
+            <iyz>0</iyz>
+            <izz>0.0159135</izz>
+          </inertia>
+        </inertial>
+        <collision name='left_rear_wheel_link_collision'>
+          <pose>0 0 0 1.5708 -0 0</pose>
+          <geometry>
+            <cylinder>
+              <length>0.065</length>
+              <radius>0.103</radius>
+            </cylinder>
+          </geometry>
+          <surface>
+            <contact>
+              <ode>
+                <kp>1e+07</kp>
+                <kd>1</kd>
+              </ode>
+            </contact>
+            <friction>
+              <ode>
+                <mu>1</mu>
+                <mu2>1</mu2>
+                <fdir1>1 0 0</fdir1>
+              </ode>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='left_rear_wheel_link_visual'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/root/catkin_ws/src/pluto_robot/pluto_description/meshes/pluto_wheel.stl</uri>
+            </mesh>
+          </geometry>
+          <material>
+            <script>
+              <name>Gazebo/DarkGrey</name>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+            </script>
+          </material>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <joint name='right_rear_wheel' type='revolute'>
+        <pose relative_to='base_footprint'>-0.219194 -0.19 0.108054 0 -0.142 0</pose>
+        <parent>base_footprint</parent>
+        <child>right_rear_wheel_link</child>
+        <axis>
+          <xyz>0 1 0</xyz>
+          <limit>
+            <lower>-1e+16</lower>
+            <upper>1e+16</upper>
+          </limit>
+          <dynamics>
+            <spring_reference>0</spring_reference>
+            <spring_stiffness>0</spring_stiffness>
+          </dynamics>
+        </axis>
+      </joint>
+      <link name='right_rear_wheel_link'>
+        <pose relative_to='right_rear_wheel'>0 0 0 0 -0 0</pose>
+        <inertial>
+          <pose>0 0 0 1.5708 -0 0</pose>
+          <mass>3</mass>
+          <inertia>
+            <ixx>0.009013</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.009013</iyy>
+            <iyz>0</iyz>
+            <izz>0.0159135</izz>
+          </inertia>
+        </inertial>
+        <collision name='right_rear_wheel_link_collision'>
+          <pose>0 0 0 1.5708 -0 0</pose>
+          <geometry>
+            <cylinder>
+              <length>0.065</length>
+              <radius>0.103</radius>
+            </cylinder>
+          </geometry>
+          <surface>
+            <contact>
+              <ode>
+                <kp>1e+07</kp>
+                <kd>1</kd>
+              </ode>
+            </contact>
+            <friction>
+              <ode>
+                <mu>1</mu>
+                <mu2>1</mu2>
+                <fdir1>1 0 0</fdir1>
+              </ode>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='right_rear_wheel_link_visual'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/root/catkin_ws/src/pluto_robot/pluto_description/meshes/pluto_wheel.stl</uri>
+            </mesh>
+          </geometry>
+          <material>
+            <script>
+              <name>Gazebo/DarkGrey</name>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+            </script>
+          </material>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <joint name='virtual_left_to_base_joint' type='revolute'>
+        <pose relative_to='base_footprint'>0.108621 0.175 0.10441 0 -0 0</pose>
+        <parent>base_footprint</parent>
+        <child>virtual_axis_left</child>
+        <axis>
+          <xyz>0 1 0</xyz>
+          <limit>
+            <lower>-0.4</lower>
+            <upper>0.4</upper>
+            <effort>1000</effort>
+            <velocity>10</velocity>
+          </limit>
+          <dynamics>
+            <spring_reference>0</spring_reference>
+            <spring_stiffness>0</spring_stiffness>
+          </dynamics>
+        </axis>
+      </joint>
+      <link name='virtual_axis_left'>
+        <pose relative_to='virtual_left_to_base_joint'>0 0 0 0 -0 0</pose>
+        <inertial>
+          <pose>0 0 0 0 -0 0</pose>
+          <mass>0.1</mass>
+          <inertia>
+            <ixx>8.08333e-05</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.000657133</iyy>
+            <iyz>0</iyz>
+            <izz>0.000602966</izz>
+          </inertia>
+        </inertial>
+        <collision name='virtual_axis_left_collision'>
+          <pose>0 0 0 0 0 -3.14159</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/root/catkin_ws/src/pluto_robot/pluto_description/meshes/pluto_lever_collision.stl</uri>
+            </mesh>
+          </geometry>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <friction>
+              <ode/>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='virtual_axis_left_visual'>
+          <pose>0 0 0 0 0 -3.14159</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/root/catkin_ws/src/pluto_robot/pluto_description/meshes/pluto_lever.stl</uri>
+            </mesh>
+          </geometry>
+          <material>
+            <script>
+              <name>Gazebo/GreyTransparent</name>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+            </script>
+          </material>
+        </visual>
+        <visual name='virtual_axis_left_fixed_joint_lump__imu_left_visual_1'>
+          <pose>0 0 0.2 0 -0 0</pose>
+          <geometry>
+            <box>
+              <size>0.06 0.06 0.02</size>
+            </box>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <joint name='left_front_wheel' type='revolute'>
+        <pose relative_to='virtual_axis_left'>0.1075 0.095 0 0 -0 0</pose>
+        <parent>virtual_axis_left</parent>
+        <child>left_front_wheel_link</child>
+        <axis>
+          <xyz>0 1 0</xyz>
+          <limit>
+            <lower>-1e+16</lower>
+            <upper>1e+16</upper>
+          </limit>
+          <dynamics>
+            <spring_reference>0</spring_reference>
+            <spring_stiffness>0</spring_stiffness>
+          </dynamics>
+        </axis>
+      </joint>
+      <link name='left_front_wheel_link'>
+        <pose relative_to='left_front_wheel'>0 0 0 0 -0 0</pose>
+        <inertial>
+          <pose>0 0 0 1.5708 -0 0</pose>
+          <mass>3</mass>
+          <inertia>
+            <ixx>0.009013</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.009013</iyy>
+            <iyz>0</iyz>
+            <izz>0.0159135</izz>
+          </inertia>
+        </inertial>
+        <collision name='left_front_wheel_link_collision'>
+          <pose>0 0 0 1.5708 -0 0</pose>
+          <geometry>
+            <cylinder>
+              <length>0.065</length>
+              <radius>0.103</radius>
+            </cylinder>
+          </geometry>
+          <surface>
+            <contact>
+              <ode>
+                <kp>1e+07</kp>
+                <kd>1</kd>
+              </ode>
+            </contact>
+            <friction>
+              <ode>
+                <mu>1</mu>
+                <mu2>1</mu2>
+                <fdir1>1 0 0</fdir1>
+              </ode>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='left_front_wheel_link_visual'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/root/catkin_ws/src/pluto_robot/pluto_description/meshes/pluto_wheel.stl</uri>
+            </mesh>
+          </geometry>
+          <material>
+            <script>
+              <name>Gazebo/DarkGrey</name>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+            </script>
+          </material>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <joint name='left_middle_wheel' type='revolute'>
+        <pose relative_to='virtual_axis_left'>-0.1075 0.095 0 0 -0 0</pose>
+        <parent>virtual_axis_left</parent>
+        <child>left_middle_wheel_link</child>
+        <axis>
+          <xyz>0 1 0</xyz>
+          <limit>
+            <lower>-1e+16</lower>
+            <upper>1e+16</upper>
+          </limit>
+          <dynamics>
+            <spring_reference>0</spring_reference>
+            <spring_stiffness>0</spring_stiffness>
+          </dynamics>
+        </axis>
+      </joint>
+      <link name='left_middle_wheel_link'>
+        <pose relative_to='left_middle_wheel'>0 0 0 0 -0 0</pose>
+        <inertial>
+          <pose>0 0 0 1.5708 -0 0</pose>
+          <mass>3</mass>
+          <inertia>
+            <ixx>0.009013</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.009013</iyy>
+            <iyz>0</iyz>
+            <izz>0.0159135</izz>
+          </inertia>
+        </inertial>
+        <collision name='left_middle_wheel_link_collision'>
+          <pose>0 0 0 1.5708 -0 0</pose>
+          <geometry>
+            <cylinder>
+              <length>0.065</length>
+              <radius>0.103</radius>
+            </cylinder>
+          </geometry>
+          <surface>
+            <contact>
+              <ode>
+                <kp>1e+07</kp>
+                <kd>1</kd>
+              </ode>
+            </contact>
+            <friction>
+              <ode>
+                <mu>1</mu>
+                <mu2>1</mu2>
+                <fdir1>1 0 0</fdir1>
+              </ode>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='left_middle_wheel_link_visual'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/root/catkin_ws/src/pluto_robot/pluto_description/meshes/pluto_wheel.stl</uri>
+            </mesh>
+          </geometry>
+          <material>
+            <script>
+              <name>Gazebo/DarkGrey</name>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+            </script>
+          </material>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <joint name='virtual_right_to_base_joint' type='revolute'>
+        <pose relative_to='base_footprint'>0.108621 -0.175 0.10441 0 -0 0</pose>
+        <parent>base_footprint</parent>
+        <child>virtual_axis_right</child>
+        <axis>
+          <xyz>0 1 0</xyz>
+          <limit>
+            <lower>-0.4</lower>
+            <upper>0.4</upper>
+            <effort>1000</effort>
+            <velocity>10</velocity>
+          </limit>
+          <dynamics>
+            <spring_reference>0</spring_reference>
+            <spring_stiffness>0</spring_stiffness>
+          </dynamics>
+        </axis>
+      </joint>
+      <link name='virtual_axis_right'>
+        <pose relative_to='virtual_right_to_base_joint'>0 0 0 0 -0 0</pose>
+        <inertial>
+          <pose>0 0 0 0 -0 0</pose>
+          <mass>0.1</mass>
+          <inertia>
+            <ixx>8.08333e-05</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.000657133</iyy>
+            <iyz>0</iyz>
+            <izz>0.000602966</izz>
+          </inertia>
+        </inertial>
+        <collision name='virtual_axis_right_collision'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/root/catkin_ws/src/pluto_robot/pluto_description/meshes/pluto_lever_collision.stl</uri>
+            </mesh>
+          </geometry>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <friction>
+              <ode/>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='virtual_axis_right_visual'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/root/catkin_ws/src/pluto_robot/pluto_description/meshes/pluto_lever.stl</uri>
+            </mesh>
+          </geometry>
+          <material>
+            <script>
+              <name>Gazebo/GreyTransparent</name>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+            </script>
+          </material>
+        </visual>
+        <visual name='virtual_axis_right_fixed_joint_lump__imu_right_visual_1'>
+          <pose>0 0 0.2 0 -0 0</pose>
+          <geometry>
+            <box>
+              <size>0.06 0.06 0.02</size>
+            </box>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <joint name='right_front_wheel' type='revolute'>
+        <pose relative_to='virtual_axis_right'>0.1075 -0.095 0 0 -0 0</pose>
+        <parent>virtual_axis_right</parent>
+        <child>right_front_wheel_link</child>
+        <axis>
+          <xyz>0 1 0</xyz>
+          <limit>
+            <lower>-1e+16</lower>
+            <upper>1e+16</upper>
+          </limit>
+          <dynamics>
+            <spring_reference>0</spring_reference>
+            <spring_stiffness>0</spring_stiffness>
+          </dynamics>
+        </axis>
+      </joint>
+      <link name='right_front_wheel_link'>
+        <pose relative_to='right_front_wheel'>0 0 0 0 -0 0</pose>
+        <inertial>
+          <pose>0 0 0 1.5708 -0 0</pose>
+          <mass>3</mass>
+          <inertia>
+            <ixx>0.009013</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.009013</iyy>
+            <iyz>0</iyz>
+            <izz>0.0159135</izz>
+          </inertia>
+        </inertial>
+        <collision name='right_front_wheel_link_collision'>
+          <pose>0 0 0 1.5708 -0 0</pose>
+          <geometry>
+            <cylinder>
+              <length>0.065</length>
+              <radius>0.103</radius>
+            </cylinder>
+          </geometry>
+          <surface>
+            <contact>
+              <ode>
+                <kp>1e+07</kp>
+                <kd>1</kd>
+              </ode>
+            </contact>
+            <friction>
+              <ode>
+                <mu>1</mu>
+                <mu2>1</mu2>
+                <fdir1>1 0 0</fdir1>
+              </ode>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='right_front_wheel_link_visual'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/root/catkin_ws/src/pluto_robot/pluto_description/meshes/pluto_wheel.stl</uri>
+            </mesh>
+          </geometry>
+          <material>
+            <script>
+              <name>Gazebo/DarkGrey</name>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+            </script>
+          </material>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <joint name='right_middle_wheel' type='revolute'>
+        <pose relative_to='virtual_axis_right'>-0.1075 -0.095 0 0 -0 0</pose>
+        <parent>virtual_axis_right</parent>
+        <child>right_middle_wheel_link</child>
+        <axis>
+          <xyz>0 1 0</xyz>
+          <limit>
+            <lower>-1e+16</lower>
+            <upper>1e+16</upper>
+          </limit>
+          <dynamics>
+            <spring_reference>0</spring_reference>
+            <spring_stiffness>0</spring_stiffness>
+          </dynamics>
+        </axis>
+      </joint>
+      <link name='right_middle_wheel_link'>
+        <pose relative_to='right_middle_wheel'>0 0 0 0 -0 0</pose>
+        <inertial>
+          <pose>0 0 0 1.5708 -0 0</pose>
+          <mass>3</mass>
+          <inertia>
+            <ixx>0.009013</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.009013</iyy>
+            <iyz>0</iyz>
+            <izz>0.0159135</izz>
+          </inertia>
+        </inertial>
+        <collision name='right_middle_wheel_link_collision'>
+          <pose>0 0 0 1.5708 -0 0</pose>
+          <geometry>
+            <cylinder>
+              <length>0.065</length>
+              <radius>0.103</radius>
+            </cylinder>
+          </geometry>
+          <surface>
+            <contact>
+              <ode>
+                <kp>1e+07</kp>
+                <kd>1</kd>
+              </ode>
+            </contact>
+            <friction>
+              <ode>
+                <mu>1</mu>
+                <mu2>1</mu2>
+                <fdir1>1 0 0</fdir1>
+              </ode>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='right_middle_wheel_link_visual'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/root/catkin_ws/src/pluto_robot/pluto_description/meshes/pluto_wheel.stl</uri>
+            </mesh>
+          </geometry>
+          <material>
+            <script>
+              <name>Gazebo/DarkGrey</name>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+            </script>
+          </material>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <plugin name='imu_controller' filename='libgazebo_ros_imu.so'>
+        <alwaysOn>1</alwaysOn>
+        <updateRate>100.0</updateRate>
+        <topicName>imu/data</topicName>
+        <serviceName>/default_imu</serviceName>
+        <gaussianNoise>2.8900000000000004e-08</gaussianNoise>
+        <xyzOffsets>0 0 0</xyzOffsets>
+        <rpyOffsets>0 0 0</rpyOffsets>
+        <ns0:position name='imu_position'/>
+        <robotNamespace>/</robotNamespace>
+        <bodyName>base_footprint</bodyName>
+        <xyzOffset>0.0215035 0 0.127312</xyzOffset>
+        <rpyOffset>2.9996 5.19844e-07 1.5708</rpyOffset>
+        <ignition::corrected_offsets>1</ignition::corrected_offsets>
+      </plugin>
+      <plugin name='novatel_gps_sim' filename='libhector_gazebo_ros_gps.so'>
+        <frameId>odom_combined</frameId>
+        <alwaysOn>1</alwaysOn>
+        <updateRate>10.0</updateRate>
+        <bodyName>base_footprint</bodyName>
+        <topicName>gps/fix</topicName>
+        <velocityTopicName>gps/fix_velocity</velocityTopicName>
+        <drift>1.0 1.0 1.0</drift>
+        <gaussianNoise>0.1 0.1 0.1</gaussianNoise>
+        <velocityDrift>0 0 0</velocityDrift>
+        <velocityGaussianNoise>0.1 0.1 0.1</velocityGaussianNoise>
+        <robotNamespace>/</robotNamespace>
+      </plugin>
+      <plugin name='base_footprint_controller' filename='libgazebo_ros_p3d.so'>
+        <alwaysOn>1</alwaysOn>
+        <updateRate>30.0</updateRate>
+        <bodyName>base_footprint</bodyName>
+        <topicName>gazebo_odom</topicName>
+        <gaussianNoise>1.0e-40</gaussianNoise>
+        <frameName>map</frameName>
+        <ns0:position name='base_footprint_p3d_position_iface'/>
+        <robotNamespace>/</robotNamespace>
+      </plugin>
+      <plugin name='gazebo_ros_control' filename='libgazebo_ros_control.so'>
+        <robotNamespace>/</robotNamespace>
+      </plugin>
+      <frame name='imu_center_to_base_joint' attached_to='base_link'>
+        <pose>0.011 0 -0.075 -3.14159 -0 1.5708</pose>
+      </frame>
+      <frame name='imu_center' attached_to='imu_center_to_base_joint'/>
+      <frame name='velodyne_to_base_joint' attached_to='base_link'>
+        <pose>0.2895 0 0.157905 0 -0 0</pose>
+      </frame>
+      <frame name='velodyne' attached_to='velodyne_to_base_joint'/>
+      <frame name='base_footprint_to_base_joint' attached_to='base_footprint'>
+        <pose>0 0 0.2 0 -0.142 0</pose>
+      </frame>
+      <frame name='base_link' attached_to='base_footprint_to_base_joint'/>
+      <frame name='imu_left_to_base_joint' attached_to='virtual_axis_left'>
+        <pose>0 0 0.2 0 -0 0</pose>
+      </frame>
+      <frame name='imu_left' attached_to='imu_left_to_base_joint'/>
+      <frame name='imu_right_to_base_joint' attached_to='virtual_axis_right'>
+        <pose>0 0 0.2 0 -0 0</pose>
+      </frame>
+      <frame name='imu_right' attached_to='imu_right_to_base_joint'/>
+      <pose>0 0 0 0 0 -1.55</pose>
+    </model>
+    <state world_name='default'>
+      <sim_time>106 167000000</sim_time>
+      <real_time>106 781416005</real_time>
+      <wall_time>1739930165 288804593</wall_time>
+      <iterations>106167</iterations>
+      <model name='botanical_garden'>
+        <pose>0 0 0 0 -0 2.56291</pose>
+        <scale>1 1 1</scale>
+        <link name='body'>
+          <pose>0 0 0 0 -0 2.56291</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='pluto'>
+        <pose>-0.009754 -0.059457 -1.31406 0.003304 -0.019575 -1.73474</pose>
+        <scale>1 1 1</scale>
+        <link name='base_footprint'>
+          <pose>-0.009754 -0.059457 -1.31406 0.003304 -0.019575 -1.73474</pose>
+          <velocity>0.000752 -0.006254 -0.001038 -0.011245 -0.011054 0.004319</velocity>
+          <acceleration>0.001225 -6.9e-05 -0.000176 -0.001472 -0.025475 0.006271</acceleration>
+          <wrench>0.048994 -0.002778 -0.00705 0 -0 0</wrench>
+        </link>
+        <link name='left_front_wheel_link'>
+          <pose>0.221324 -0.314654 -1.20589 2.93722 -1.51575 1.611</pose>
+          <velocity>0.000331 -0.004495 9.9e-05 0.002353 0.019686 -0.002909</velocity>
+          <acceleration>0.034103 -0.005844 -0.606559 -2.14499 -0.617749 3.10337</acceleration>
+          <wrench>0.10231 -0.017531 -1.81968 0 -0 0</wrench>
+        </link>
+        <link name='left_middle_wheel_link'>
+          <pose>0.256387 -0.102511 -1.20649 3.13161 0.860284 1.39932</pose>
+          <velocity>4.3e-05 -0.0037 0.000454 0.113201 -0.010348 0.006522</velocity>
+          <acceleration>-0.000318 -0.006233 -0.005172 0.06032 -0.014162 -0.062096</acceleration>
+          <wrench>-0.000955 -0.018698 -0.015515 0 -0 0</wrench>
+        </link>
+        <link name='left_rear_wheel_link'>
+          <pose>0.213457 0.127904 -1.20969 0.00331 0.267452 -1.7338</pose>
+          <velocity>-0.001376 -0.004066 -0.000647 -0.011086 -0.005528 0.004595</velocity>
+          <acceleration>0.000969 0.001245 0.002504 0.003474 0.011626 0.002295</acceleration>
+          <wrench>0.002908 0.003735 0.007511 0 -0 0</wrench>
+        </link>
+        <link name='right_front_wheel_link'>
+          <pose>-0.311335 -0.226671 -1.20742 -3.00366 -1.53869 1.26977</pose>
+          <velocity>-5.8e-05 -0.004413 -0.000493 -0.000253 0.019381 -0.009886</velocity>
+          <acceleration>0.027808 -0.019249 0.369169 0.674306 -1.34665 0.164568</acceleration>
+          <wrench>0.083423 -0.057747 1.10751 0 -0 0</wrench>
+        </link>
+        <link name='right_middle_wheel_link'>
+          <pose>-0.276284 -0.014485 -1.20831 -3.13913 0.249279 1.40832</pose>
+          <velocity>-0.000369 -0.005462 -0.001378 0.048974 -0.00268 -0.004859</velocity>
+          <acceleration>-0.00277 0.004838 0.000628 -0.039345 -0.046982 -0.047688</acceleration>
+          <wrench>-0.00831 0.014513 0.001885 0 -0 0</wrench>
+        </link>
+        <link name='right_rear_wheel_link'>
+          <pose>-0.161444 0.189908 -1.21095 0.004406 -0.680893 -1.73755</pose>
+          <velocity>-0.001654 -0.006093 -0.005225 0.019284 -0.00769 0.008425</velocity>
+          <acceleration>0.000779 -0.000219 3.7e-05 0.005859 0.011488 0.004972</acceleration>
+          <wrench>0.002336 -0.000658 0.000112 0 -0 0</wrench>
+        </link>
+        <link name='virtual_axis_left'>
+          <pose>0.145144 -0.193093 -1.2069 0.011491 -0.001473 -1.73468</pose>
+          <velocity>0.000128 -0.004374 0.001797 0.000107 0.014343 -0.002787</velocity>
+          <acceleration>0.013537 0.00735 -0.000364 1.93517 -1.1363 -2.80568</acceleration>
+          <wrench>0.001354 0.000735 -3.6e-05 0 -0 0</wrench>
+        </link>
+        <link name='virtual_axis_right'>
+          <pose>-0.200141 -0.135963 -1.20813 0.005665 -0.002948 -1.73491</pose>
+          <velocity>-0.000166 -0.006072 -0.002417 -0.005298 -0.020824 0.008543</velocity>
+          <acceleration>-0.001021 -0.000184 -0.00109 -2.54787 -0.948544 3.0471</acceleration>
+          <wrench>-0.000102 -1.8e-05 -0.000109 0 -0 0</wrench>
+        </link>
+      </model>
+    </state>
+    <gui fullscreen='0'>
+      <camera name='user_camera'>
+        <pose>1.99843 4.59307 37.5533 3.14159 1.57079 3.14159</pose>
+        <view_controller>orbit</view_controller>
+        <projection_type>perspective</projection_type>
+      </camera>
+    </gui>
+  </world>
+</sdf>
